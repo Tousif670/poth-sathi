@@ -1,0 +1,38 @@
+[
+  {
+    "id": "EXAMPLE_contact_001",
+    "service": {
+      "bn": "জাতীয় জরুরি সেবা",
+      "en": "National Emergency Service"
+    },
+    "number": "999",
+    "status": "TO_VERIFY"
+  },
+  {
+    "id": "EXAMPLE_contact_002",
+    "service": {
+      "bn": "ট্যুরিস্ট পুলিশ কক্সবাজার",
+      "en": "Tourist Police Cox's Bazar"
+    },
+    "number": "TO_VERIFY",
+    "status": "TO_VERIFY"
+  },
+  {
+    "id": "EXAMPLE_contact_003",
+    "service": {
+      "bn": "ফায়ার সার্ভিস ও সিভিল ডিফেন্স",
+      "en": "Fire Service & Civil Defence"
+    },
+    "number": "TO_VERIFY",
+    "status": "TO_VERIFY"
+  },
+  {
+    "id": "EXAMPLE_contact_004",
+    "service": {
+      "bn": "কক্সবাজার সদর হাসপাতাল জরুরি বিভাগ",
+      "en": "Cox's Bazar Sadar Hospital Emergency"
+    },
+    "number": "TO_VERIFY",
+    "status": "TO_VERIFY"
+  }
+]

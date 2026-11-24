@@ -1,0 +1,53 @@
+[
+  {
+    "id": "kolatoli",
+    "zone_id": "kolatoli",
+    "zone_name": {
+      "bn": "কলাতলী সৈকত",
+      "en": "Kolatoli Beach"
+    },
+    "flag_colour": "yellow",
+    "note": {
+      "bn": "EXAMPLE মাঝারি ঢেউ ও জোয়ারের সতর্কতা।",
+      "en": "EXAMPLE moderate waves and high tide caution."
+    },
+    "set_by": "EXAMPLE_ADMIN",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T08:00:00Z"
+  },
+  {
+    "id": "sugandha",
+    "zone_id": "sugandha",
+    "zone_name": {
+      "bn": "সুগন্ধা সৈকত",
+      "en": "Sugandha Beach"
+    },
+    "flag_colour": "green",
+    "note": {
+      "bn": "EXAMPLE স্বাভাবিক সমুদ্র পরিস্থিতি ও সাঁতারের অনুকূল।",
+      "en": "EXAMPLE normal sea conditions suitable for swimming."
+    },
+    "set_by": "EXAMPLE_ADMIN",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T08:00:00Z"
+  },
+  {
+    "id": "laboni",
+    "zone_id": "laboni",
+    "zone_name": {
+      "bn": "লাবণী সৈকত",
+      "en": "Laboni Beach"
+    },
+    "flag_colour": "green",
+    "note": {
+      "bn": "EXAMPLE নিরাপদ জোয়ার ও শান্ত সৈকত।",
+      "en": "EXAMPLE safe tides and calm sea conditions."
+    },
+    "set_by": "EXAMPLE_ADMIN",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T08:00:00Z"
+  }
+]
