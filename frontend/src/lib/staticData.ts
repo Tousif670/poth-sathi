@@ -71,8 +71,9 @@ export interface StaticEmergencyContact {
 }
 
 export async function loadTier0Json<T>(filename: string): Promise<T[]> {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH?.replace(/\/+$/, "") || "";
   try {
-    const response = await fetch(`/static/${filename}`);
+    const response = await fetch(`${basePath}/static/${filename}`);
     if (!response.ok) {
       return [];
     }
