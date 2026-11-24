@@ -76,7 +76,11 @@ def check_firestore_connection(timeout_seconds: float = 2.0) -> bool:
     """Check if Firestore connection is healthy without throwing exceptions."""
     try:
         client = get_firestore_client()
-        docs: Any = client.collection("beach_status").limit(1).get(timeout=timeout_seconds)
+        docs: Any = (
+            client.collection("beach_status")
+            .limit(1)
+            .get(retry=None, timeout=timeout_seconds)
+        )
         _ = list(docs)
         return True
     except Exception as e:
