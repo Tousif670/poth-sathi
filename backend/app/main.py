@@ -7,12 +7,15 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.api.v1.admin import router as admin_router
 from app.api.v1.auth import router as auth_router
 from app.api.v1.chat import router as chat_router
 from app.api.v1.emergency import router as emergency_router
 from app.api.v1.health import router as health_router
 from app.api.v1.hotels import router as hotels_router
 from app.api.v1.nearby import router as nearby_router
+from app.api.v1.reports import router as reports_router
+from app.api.v1.reviews import router as reviews_router
 from app.api.v1.safety import router as safety_router
 from app.api.v1.transport import router as transport_router
 from app.core.config import Settings, get_settings
@@ -85,6 +88,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(safety_router, prefix="/api/v1", tags=["Safety & Advisories"])
     app.include_router(emergency_router, prefix="/api/v1", tags=["Emergency & SOS"])
     app.include_router(chat_router, prefix="/api/v1", tags=["AI Chat"])
+    app.include_router(reviews_router, prefix="/api/v1", tags=["Reviews"])
+    app.include_router(reports_router, prefix="/api/v1", tags=["Reports"])
+    app.include_router(admin_router, prefix="/api/v1", tags=["Admin"])
 
     return app
 

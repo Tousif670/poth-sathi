@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Flag, MessageSquarePlus } from "lucide-react";
 import { HotelCard } from "@/components/hotels/HotelCard";
 import { HotelFilters, type HotelFilterState } from "@/components/hotels/HotelFilters";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthProvider";
 import { useLocale } from "@/context/LocaleProvider";
 import { apiFetch } from "@/lib/api";
 import { type StaticHotel, loadTier0Json } from "@/lib/staticData";
@@ -65,10 +67,68 @@ function computeLocalScore(hotel: StaticHotel, filters: HotelFilterState): numbe
 
 export default function HotelsPage() {
   const { locale, messages, t } = useLocale();
+  const { session } = useAuth();
   const [filters, setFilters] = useState<HotelFilterState>(DEFAULT_FILTERS);
   const [hotels, setHotels] = useState<StaticHotel[]>([]);
   const [isTier0Fallback, setIsTier0Fallback] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState<StaticHotel | null>(null);
+  const [reviewComment, setReviewComment] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [feedbackNotice, setFeedbackNotice] = useState<string | null>(null);
+
+  const handleReportWrongInfo = async (hotel: StaticHotel) => {
+    try {
+      const res = await apiFetch<{ message_bn: string; message_en: string }>("/reports", {
+        method: "POST",
+        token: session?.idToken,
+        body: {
+          entity_type: "hotel",
+          entity_id: hotel.hotel_id,
+          issue_description: "User flagged hotel tariff or details for verification.",
+        },
+      });
+      setFeedbackNotice(locale === "bn" ? res.message_bn : res.message_en);
+    } catch {
+      setFeedbackNotice(
+        t(
+          "ধন্যবাদ। আপনার প্রতিবেদনটি পর্যালোচনার জন্য নোট করা হয়েছে।",
+          "Thank you. Your report has been noted for review.",
+        ),
+      );
+    }
+  };
+
+  const handleSubmitReview = async (hotel: StaticHotel) => {
+    if (!reviewComment.trim()) return;
+    try {
+      const res = await apiFetch<{ sentiment: { overall: string } }>(
+        `/hotels/${hotel.hotel_id}/reviews`,
+        {
+          method: "POST",
+          token: session?.idToken,
+          body: {
+            rating: reviewRating,
+            comment: reviewComment.trim(),
+            lang: locale,
+          },
+        },
+      );
+      setReviewComment("");
+      setFeedbackNotice(
+        t(
+          `রিভিউ জমা হয়েছে! সেন্টিমেন্ট: ${res.sentiment.overall}`,
+          `Review submitted! Detected sentiment: ${res.sentiment.overall}`,
+        ),
+      );
+    } catch {
+      setFeedbackNotice(
+        t(
+          "রিভিউ জমা দিতে উপরে 'অতিথি হিসেবে শুরু করুন' বাটনে ক্লিক করুন।",
+          "Please click 'Continue as Guest' in the top bar before posting a review.",
+        ),
+      );
+    }
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -218,8 +278,61 @@ export default function HotelsPage() {
               </p>
             </div>
 
-            <div className="flex justify-end">
-              <Button type="button" onClick={() => setSelectedHotel(null)}>
+            <div className="space-y-2 border-t pt-3">
+              <p className="text-xs font-semibold flex items-center gap-1.5">
+                <MessageSquarePlus className="h-3.5 w-3.5" />
+                <span>{t("রিভিউ ও সেন্টিমেন্ট যোগ করুন (P1)", "Write a Review with Sentiment Analysis (P1)")}</span>
+              </p>
+              <div className="flex gap-2">
+                <select
+                  aria-label="Rating"
+                  value={reviewRating}
+                  onChange={(e) => setReviewRating(Number(e.target.value))}
+                  className="rounded-md border bg-background px-2 py-1.5 text-xs"
+                >
+                  {[5, 4, 3, 2, 1].map((r) => (
+                    <option key={r} value={r}>
+                      {r} ★
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  value={reviewComment}
+                  onChange={(e) => setReviewComment(e.target.value)}
+                  placeholder={t("যেমন: ঘর পরিষ্কার এবং সুন্দর...", "e.g. Room was clean and great...")}
+                  className="flex-1 rounded-md border bg-background px-3 py-1.5 text-xs"
+                />
+                <Button type="button" size="sm" onClick={() => handleSubmitReview(selectedHotel)}>
+                  {t("জমা দিন", "Post")}
+                </Button>
+              </div>
+            </div>
+
+            {feedbackNotice && (
+              <p className="rounded-md bg-emerald-50 p-2 text-xs font-medium text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200">
+                {feedbackNotice}
+              </p>
+            )}
+
+            <div className="flex items-center justify-between pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handleReportWrongInfo(selectedHotel)}
+                className="gap-1.5 text-xs"
+              >
+                <Flag className="h-3.5 w-3.5 text-amber-600" />
+                <span>{t("ভুল তথ্য রিপোর্ট করুন", "Report Wrong Info")}</span>
+              </Button>
+              <Button
+                type="button"
+                onClick={() => {
+                  setSelectedHotel(null);
+                  setFeedbackNotice(null);
+                }}
+              >
                 {t("বন্ধ করুন", "Close")}
               </Button>
             </div>

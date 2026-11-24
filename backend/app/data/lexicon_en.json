@@ -1,0 +1,33 @@
+{
+  "positive": [
+    "clean",
+    "friendly",
+    "spacious",
+    "great",
+    "excellent",
+    "comfortable",
+    "beautiful",
+    "quiet",
+    "helpful",
+    "fresh",
+    "good",
+    "nice",
+    "safe",
+    "affordable"
+  ],
+  "negative": [
+    "dirty",
+    "noisy",
+    "rude",
+    "small",
+    "broken",
+    "expensive",
+    "smelly",
+    "slow",
+    "crowded",
+    "old",
+    "bad",
+    "poor",
+    "delayed"
+  ]
+}
