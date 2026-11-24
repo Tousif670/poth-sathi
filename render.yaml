@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: pothsathi-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: DAILY_AI_LIMIT
+        value: "500"
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
