@@ -32,11 +32,51 @@ class AppError(Exception):
         }
 
 
+class InvalidInputError(AppError):
+    def __init__(
+        self,
+        message_bn: str = "অনুরোধের তথ্য সঠিক নয়। অনুগ্রহ করে তথ্য পরীক্ষা করুন।",
+        message_en: str = "Invalid request data. Please check your input.",
+        code: str = "INVALID_INPUT",
+    ):
+        super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=400)
+
+
+class InvalidTokenError(AppError):
+    def __init__(
+        self,
+        message_bn: str = "লগইন সেশন মেয়াদোত্তীর্ণ বা অবৈধ। আবার লগইন করুন।",
+        message_en: str = "Login session expired or invalid. Please sign in again.",
+        code: str = "INVALID_TOKEN",
+    ):
+        super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=401)
+
+
+class ForbiddenError(AppError):
+    def __init__(
+        self,
+        message_bn: str = "এই কাজটি করার জন্য প্রশাসনিক অনুমতি নেই।",
+        message_en: str = "Administrative permissions required for this action.",
+        code: str = "FORBIDDEN",
+    ):
+        super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=403)
+
+
+class UserNotFoundError(AppError):
+    def __init__(
+        self,
+        message_bn: str = "ব্যবহারকারীর প্রোফাইল পাওয়া যায়নি।",
+        message_en: str = "User profile could not be found.",
+        code: str = "USER_NOT_FOUND",
+    ):
+        super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=404)
+
+
 class NotFoundError(AppError):
     def __init__(
         self,
-        message_bn: str = "অনুরোধ করা তথ্য পাওয়া যায়নি।",
-        message_en: str = "Requested resource was not found.",
+        message_bn: str = "কাঙ্ক্ষিত তথ্য খুঁজে পাওয়া যায়নি।",
+        message_en: str = "The requested resource was not found.",
         code: str = "NOT_FOUND",
     ):
         super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=404)
@@ -45,8 +85,8 @@ class NotFoundError(AppError):
 class DatabaseUnavailableError(AppError):
     def __init__(
         self,
-        message_bn: str = "ডাটাবেজ সাময়িকভাবে অনুপলব্ধ। অনুগ্রহ করে কিছুক্ষণ পর চেষ্টা করুন।",
-        message_en: str = "Database service is temporarily unavailable.",
+        message_bn: str = "ডেটাবেজ সেবা সাময়িকভাবে অনুপলব্ধ। প্রাথমিক তথ্য দেখানো হচ্ছে।",
+        message_en: str = "Database service unavailable. Showing offline reference data.",
         code: str = "DB_UNAVAILABLE",
     ):
         super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=503)
@@ -61,9 +101,9 @@ async def validation_error_handler(request: Request, exc: RequestValidationError
         status_code=400,
         content={
             "error": {
-                "code": "VALIDATION_ERROR",
-                "message_bn": "অনুরোধের তথ্য সঠিক নয়।",
-                "message_en": "Invalid request payload or query parameters.",
+                "code": "INVALID_INPUT",
+                "message_bn": "অনুরোধের তথ্য সঠিক নয়। অনুগ্রহ করে তথ্য পরীক্ষা করুন।",
+                "message_en": "Invalid request data. Please check your input.",
             }
         },
     )

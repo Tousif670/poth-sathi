@@ -177,6 +177,33 @@ pytest
 ruff check
 ```
 
+### Manual auth test
+
+With the Firebase Emulators (`firebase emulators:start --only firestore,auth`) and the FastAPI backend (`uvicorn app.main:app --reload --port 8000`) running:
+
+```bash
+# 1. Mint an anonymous ID token from the local Auth emulator
+export FIREBASE_AUTH_EMULATOR_HOST=localhost:9099
+python scripts/dev_token.py
+export TOKEN="<paste ID_TOKEN here>"
+
+# 2. Register the user (201 Created on first call, 200 OK on repeat)
+curl -i -X POST http://localhost:8000/api/v1/auth/register \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"display_name": "Cox Tourist", "preferred_language": "bn"}'
+
+# 3. Fetch the user profile (200 OK)
+curl -i http://localhost:8000/api/v1/me \
+  -H "Authorization: Bearer $TOKEN"
+
+# 4. Update preferred language (200 OK)
+curl -i -X PATCH http://localhost:8000/api/v1/me \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"preferred_language": "en"}'
+```
+
 ---
 
 ## Quick start (frontend)
