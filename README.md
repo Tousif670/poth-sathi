@@ -179,6 +179,54 @@ ruff check
 
 ---
 
+## Quick start (frontend)
+
+Follow these exact steps from the repository root:
+
+```bash
+# 1. Enter frontend directory and install dependencies
+cd frontend
+npm install
+
+# 2. Setup local environment file
+cp .env.example .env.local
+
+# 3. Start Next.js development server (http://localhost:3000)
+npm run dev
+
+# 4. Run linter, unit tests, and production build
+npm run lint
+npm test
+npm run build
+```
+
+---
+
+## How to run everything locally
+
+Run the full stack in **3 separate terminals** from the repository root:
+
+- **Terminal 1 — Firebase Emulators:**
+  ```bash
+  firebase emulators:start --only firestore,auth
+  ```
+  *(Optional first-time seed once emulators are ready: `source backend/.venv/bin/activate && python scripts/seed_loader.py`)*
+
+- **Terminal 2 — FastAPI Backend (`http://localhost:8000`):**
+  ```bash
+  source backend/.venv/bin/activate
+  cd backend
+  uvicorn app.main:app --reload --port 8000
+  ```
+
+- **Terminal 3 — Next.js Frontend (`http://localhost:3000`):**
+  ```bash
+  cd frontend
+  npm run dev
+  ```
+
+---
+
 ## Getting Started
 
 ### 1. Clone the repo
