@@ -92,6 +92,26 @@ class DatabaseUnavailableError(AppError):
         super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=503)
 
 
+class InputTooLongError(AppError):
+    def __init__(
+        self,
+        message_bn: str = "বার্তাটি অনেক বড় (সর্বোচ্চ ২০০০ অক্ষর অনুমোদিত)। অনুগ্রহ করে সংক্ষিপ্ত করুন।",
+        message_en: str = "Message exceeds the 2,000-character limit. Please shorten your input.",
+        code: str = "INPUT_TOO_LONG",
+    ):
+        super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=400)
+
+
+class RateLimitedError(AppError):
+    def __init__(
+        self,
+        message_bn: str = "আপনার দৈনিক চ্যাট সীমা (৫০টি বার্তা) পূর্ণ হয়েছে। আগামীকাল আবার চেষ্টা করুন।",
+        message_en: str = "Daily chat limit (50 messages) reached. Please try again tomorrow.",
+        code: str = "RATE_LIMITED",
+    ):
+        super().__init__(code=code, message_bn=message_bn, message_en=message_en, http_status=429)
+
+
 async def app_error_handler(request: Request, exc: AppError) -> JSONResponse:
     return JSONResponse(status_code=exc.http_status, content=exc.to_dict())
 
