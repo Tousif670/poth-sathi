@@ -1,11 +1,14 @@
 import re
 from typing import Any
 
+from app.agents.tool_declarations import TOOL_DECLARATIONS
+from app.agents.tool_executor import ToolExecutor
 from app.core.errors import InputTooLongError, InvalidInputError
 from app.core.llm_client import LLMClient, LLMError
 from app.core.rate_limiter import RateLimiter, RateLimitStatus, global_rate_limiter
 from app.models.chat import ChatLanguage, ChatRequest, ChatResponse
 from app.repositories.chat_repository import ChatRepository
+from app.services.safety_rules import SafetyRuleEngine
 
 MAX_MESSAGE_LENGTH = 2000
 
@@ -61,17 +64,29 @@ def check_prompt_injection(text: str) -> bool:
 
 
 class ChatService:
-    """Orchestrates chat validation, PII stripping, rate limiting, and LLMClient calls."""
+    """Orchestrates chat validation, safety rule engine, Gemini tool calls, and fallback."""
 
     def __init__(
         self,
         llm_client: LLMClient | None = None,
         rate_limiter: RateLimiter | None = None,
         chat_repository: ChatRepository | None = None,
+        safety_engine: SafetyRuleEngine | None = None,
+        tool_executor: ToolExecutor | None = None,
+        rag_service: Any | None = None,
     ) -> None:
         self._llm = llm_client if llm_client is not None else LLMClient()
         self._limiter = rate_limiter if rate_limiter is not None else global_rate_limiter
         self._chat_repo = chat_repository
+        self._safety_engine = (
+            safety_engine if safety_engine is not None else SafetyRuleEngine()
+        )
+        self._tool_executor = (
+            tool_executor
+            if tool_executor is not None
+            else ToolExecutor(rag_service=rag_service)
+        )
+        self._rag_service = rag_service
 
     async def process_message(
         self,
@@ -93,7 +108,16 @@ class ChatService:
             client_ip=client_ip,
         )
 
-        # 2. Prompt injection guardrail
+        # 2. Pre-LLM Safety Rule Engine (runs BEFORE Gemini with zero LLM calls; D6)
+        safety_match = self._safety_engine.evaluate(
+            user_message=raw_msg,
+            lang=lang,
+            session_id=payload.session_id,
+        )
+        if safety_match is not None:
+            return safety_match, rl_status
+
+        # 3. Prompt injection guardrail
         if check_prompt_injection(raw_msg):
             refusal = (
                 "আমি শুধু কক্সবাজার ভ্রমণের যাচাইকৃত তথ্য দিয়ে সাহায্য করতে পারি।"
@@ -110,11 +134,20 @@ class ChatService:
                 rl_status,
             )
 
-        # 3. Strip PII before sending to LLM or storing
+        # 4. Strip PII before sending to LLM or storing
         sanitized_msg = strip_pii(raw_msg)
 
-        # 4. Global daily AI counter check ("AI rest mode" when exhausted)
+        # 5. Global daily AI counter check ("AI rest mode" when exhausted)
         if not self._limiter.try_consume_global_ai_quota():
+            if self._rag_service is not None:
+                fb_res = self._rag_service.fallback_answer(
+                    query=sanitized_msg,
+                    lang=lang,
+                    session_id=payload.session_id,
+                    tool_executor=self._tool_executor,
+                )
+                return fb_res, rl_status
+
             rest_text = AI_REST_MESSAGE_BN if lang == "bn" else AI_REST_MESSAGE_EN
             return (
                 ChatResponse(
@@ -128,24 +161,60 @@ class ChatService:
                 rl_status,
             )
 
-        # 5. Call LLMClient wrapper
+        # 6. Call LLMClient wrapper with function-calling tool declarations
         sys_prompt = SYSTEM_PROMPT_BN if lang == "bn" else SYSTEM_PROMPT_EN
+        cards = []
+        sources = []
+        tool_calls_used: list[str] = []
+
         try:
             llm_res = await self._llm.chat(
                 messages=[{"role": "user", "content": sanitized_msg}],
+                tools=TOOL_DECLARATIONS,
                 system_prompt=sys_prompt,
             )
-            answer_text = llm_res.text or (
-                AI_REST_MESSAGE_BN if lang == "bn" else AI_REST_MESSAGE_EN
-            )
+
+            if llm_res.tool_calls:
+                exec_res = self._tool_executor.execute_all(llm_res.tool_calls, lang=lang)
+                cards = exec_res.cards
+                sources = exec_res.sources
+                tool_calls_used = exec_res.tool_names
+
+                tool_context = "\n".join(exec_res.summary_lines) or "No matching records found."
+                followup = await self._llm.chat(
+                    messages=[
+                        {"role": "user", "content": sanitized_msg},
+                        {
+                            "role": "user",
+                            "content": f"Verified tool results:\n{tool_context}",
+                        },
+                    ],
+                    system_prompt=sys_prompt,
+                )
+                answer_text = followup.text or "\n".join(exec_res.summary_lines)
+            else:
+                answer_text = llm_res.text
+
+            if not answer_text:
+                answer_text = AI_REST_MESSAGE_BN if lang == "bn" else AI_REST_MESSAGE_EN
+
             fallback_used = False
             is_resting = False
         except LLMError:
+            if self._rag_service is not None:
+                fb_res = self._rag_service.fallback_answer(
+                    query=sanitized_msg,
+                    lang=lang,
+                    session_id=payload.session_id,
+                    tool_executor=self._tool_executor,
+                )
+                return fb_res, rl_status
+
             answer_text = AI_REST_MESSAGE_BN if lang == "bn" else AI_REST_MESSAGE_EN
             fallback_used = True
             is_resting = True
 
-        # 6. Persist to chat_sessions if repository is wired and user is authenticated
+        # 7. Persist to chat_sessions if repository is wired and user is authenticated
         session_id = payload.session_id
         if self._chat_repo is not None and uid:
             try:
@@ -158,7 +227,6 @@ class ChatService:
                 self._chat_repo.save_message(session_id, "user", sanitized_msg, lang)
                 self._chat_repo.save_message(session_id, "assistant", answer_text, lang)
             except Exception:
-                # Non-fatal if emulator is not running during unit test
                 pass
 
         return (
@@ -166,6 +234,9 @@ class ChatService:
                 answer_text=answer_text,
                 language=lang,
                 session_id=session_id,
+                cards=cards,
+                sources=sources,
+                tool_calls_used=tool_calls_used,
                 fallback_used=fallback_used,
                 is_ai_resting=is_resting,
             ),
