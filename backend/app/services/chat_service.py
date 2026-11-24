@@ -8,6 +8,7 @@ from app.core.llm_client import LLMClient, LLMError
 from app.core.rate_limiter import RateLimiter, RateLimitStatus, global_rate_limiter
 from app.models.chat import ChatLanguage, ChatRequest, ChatResponse
 from app.repositories.chat_repository import ChatRepository
+from app.services.rag_service import global_rag_service
 from app.services.safety_rules import SafetyRuleEngine
 
 MAX_MESSAGE_LENGTH = 2000
@@ -81,12 +82,12 @@ class ChatService:
         self._safety_engine = (
             safety_engine if safety_engine is not None else SafetyRuleEngine()
         )
+        self._rag_service = rag_service if rag_service is not None else global_rag_service
         self._tool_executor = (
             tool_executor
             if tool_executor is not None
-            else ToolExecutor(rag_service=rag_service)
+            else ToolExecutor(rag_service=self._rag_service)
         )
-        self._rag_service = rag_service
 
     async def process_message(
         self,
