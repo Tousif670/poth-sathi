@@ -1,5 +1,30 @@
 {
   "app": {
-    "name": "PothSathi"
+    "name": "PothSathi",
+    "tagline": "Bilingual AI Travel Companion for Cox's Bazar",
+    "disclaimer": "PothSathi is a university project. Data is indicative. Verify critical information independently."
+  },
+  "nav": {
+    "home": "Home",
+    "hotels": "Hotels",
+    "nearby": "Nearby",
+    "fares": "Fares",
+    "safety": "Beach Safety",
+    "emergency": "Emergency SOS",
+    "chat": "AI Chat",
+    "admin": "Admin"
+  },
+  "auth": {
+    "guest": "Guest Tourist",
+    "signInGuest": "Continue as Guest",
+    "signedInAs": "Signed in:",
+    "signOut": "Sign out",
+    "adminBadge": "Admin"
+  },
+  "badges": {
+    "verified": "Verified Data",
+    "sample": "Sample / Indicative",
+    "outdated": "May be outdated (>6h old)",
+    "tier0Fallback": "Offline Reference Data (Tier 0)"
   }
 }
