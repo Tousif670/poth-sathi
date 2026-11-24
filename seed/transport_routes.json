@@ -1,0 +1,74 @@
+[
+  {
+    "id": "EXAMPLE_route_001",
+    "route_id": "EXAMPLE_route_001",
+    "origin": {
+      "bn": "কলাতলী মোড়",
+      "en": "Kolatoli More"
+    },
+    "destination": {
+      "bn": "লাবণী পয়েন্ট",
+      "en": "Laboni Point"
+    },
+    "vehicle_type": "cng_auto",
+    "fare_basis": "per_vehicle",
+    "fare_min_bdt": 120,
+    "fare_max_bdt": 150,
+    "distance_km": 3.5,
+    "notes": {
+      "bn": "EXAMPLE সংরক্ষিত সিএনজি ভাড়া।",
+      "en": "EXAMPLE reserved CNG auto fare."
+    },
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_route_002",
+    "route_id": "EXAMPLE_route_002",
+    "origin": {
+      "bn": "সুগন্ধা পয়েন্ট",
+      "en": "Sugandha Point"
+    },
+    "destination": {
+      "bn": "লাবণী পয়েন্ট",
+      "en": "Laboni Point"
+    },
+    "vehicle_type": "tomtom",
+    "fare_basis": "per_person",
+    "fare_min_bdt": 15,
+    "fare_max_bdt": 20,
+    "distance_km": 1.8,
+    "notes": {
+      "bn": "EXAMPLE শেয়ার্ড ইজি বাইক (টমটম) জনপ্রতি ভাড়া।",
+      "en": "EXAMPLE shared easy-bike (tomtom) per person fare."
+    },
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_route_003",
+    "route_id": "EXAMPLE_route_003",
+    "origin": {
+      "bn": "কলাতলী বিচ",
+      "en": "Kolatoli Beach"
+    },
+    "destination": {
+      "bn": "সুগন্ধা বিচ",
+      "en": "Sugandha Beach"
+    },
+    "vehicle_type": "rickshaw",
+    "fare_basis": "per_vehicle",
+    "fare_min_bdt": 40,
+    "fare_max_bdt": 60,
+    "distance_km": 1.2,
+    "notes": {
+      "bn": "EXAMPLE লোকাল ব্যাটারি রিকশা ভাড়া।",
+      "en": "EXAMPLE local battery rickshaw fare."
+    },
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  }
+]

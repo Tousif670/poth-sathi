@@ -1,0 +1,152 @@
+[
+  {
+    "id": "EXAMPLE_place_001",
+    "place_id": "EXAMPLE_place_001",
+    "name": {
+      "bn": "EXAMPLE জেলা সদর হাসপাতাল",
+      "en": "EXAMPLE District Sadar Hospital"
+    },
+    "category": "hospital",
+    "description": {
+      "bn": "EXAMPLE জরুরি চিকিৎসা কেন্দ্র।",
+      "en": "EXAMPLE emergency care center."
+    },
+    "address": {
+      "bn": "EXAMPLE হাসপাতাল রোড, কক্সবাজার",
+      "en": "EXAMPLE Hospital Road, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "opening_hours": "24/7",
+    "lat": 21.4380,
+    "lon": 91.9820,
+    "geohash": "w407qm",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_place_002",
+    "place_id": "EXAMPLE_place_002",
+    "name": {
+      "bn": "EXAMPLE ফার্মেসি ০১",
+      "en": "EXAMPLE Pharmacy 001"
+    },
+    "category": "pharmacy",
+    "description": {
+      "bn": "EXAMPLE ওষুধ ও প্রাথমিক চিকিৎসা সরবরাহ।",
+      "en": "EXAMPLE medicines and first aid supplies."
+    },
+    "address": {
+      "bn": "EXAMPLE কলাতলী মোড়, কক্সবাজার",
+      "en": "EXAMPLE Kolatoli More, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "opening_hours": "08:00–23:00",
+    "lat": 21.4180,
+    "lon": 91.9800,
+    "geohash": "w407qc",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_place_003",
+    "place_id": "EXAMPLE_place_003",
+    "name": {
+      "bn": "EXAMPLE ট্যুরিস্ট পুলিশ ফাঁড়ি",
+      "en": "EXAMPLE Tourist Police Outpost"
+    },
+    "category": "police",
+    "description": {
+      "bn": "EXAMPLE পর্যটক সুরক্ষা ও পুলিশ সহায়তা কেন্দ্র।",
+      "en": "EXAMPLE tourist security and police assistance post."
+    },
+    "address": {
+      "bn": "EXAMPLE লাবণী সৈকত পয়েন্ট, কক্সবাজার",
+      "en": "EXAMPLE Laboni Beach Point, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "opening_hours": "24/7",
+    "lat": 21.4340,
+    "lon": 91.9700,
+    "geohash": "w407qj",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_place_004",
+    "place_id": "EXAMPLE_place_004",
+    "name": {
+      "bn": "EXAMPLE এটিএম বুথ ০১",
+      "en": "EXAMPLE ATM Booth 001"
+    },
+    "category": "atm",
+    "description": {
+      "bn": "EXAMPLE সার্বক্ষণিক টাকা তোলার বুথ।",
+      "en": "EXAMPLE 24/7 cash withdrawal booth."
+    },
+    "address": {
+      "bn": "EXAMPLE সুগন্ধা সড়ক, কক্সবাজার",
+      "en": "EXAMPLE Sugandha Road, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "opening_hours": "24/7",
+    "lat": 21.4260,
+    "lon": 91.9740,
+    "geohash": "w407qh",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_place_005",
+    "place_id": "EXAMPLE_place_005",
+    "name": {
+      "bn": "EXAMPLE কেন্দ্রীয় জামে মসজিদ",
+      "en": "EXAMPLE Central Jame Mosque"
+    },
+    "category": "mosque",
+    "description": {
+      "bn": "EXAMPLE কেন্দ্রীয় প্রার্থনাস্থল।",
+      "en": "EXAMPLE central prayer hall."
+    },
+    "address": {
+      "bn": "EXAMPLE প্রধান সড়ক, কক্সবাজার",
+      "en": "EXAMPLE Main Road, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "opening_hours": "04:30–21:30",
+    "lat": 21.4390,
+    "lon": 91.9805,
+    "geohash": "w407qm",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_place_006",
+    "place_id": "EXAMPLE_place_006",
+    "name": {
+      "bn": "EXAMPLE কোস্ট গার্ড ও উদ্ধার কেন্দ্র",
+      "en": "EXAMPLE Coast Guard Rescue Post"
+    },
+    "category": "police",
+    "description": {
+      "bn": "EXAMPLE সমুদ্র উদ্ধার ও কোস্ট গার্ড নিরাপত্তা।",
+      "en": "EXAMPLE sea rescue and coastal patrol unit."
+    },
+    "address": {
+      "bn": "EXAMPLE সুগন্ধা সৈকত, কক্সবাজার",
+      "en": "EXAMPLE Sugandha Beach, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "opening_hours": "24/7",
+    "lat": 21.4240,
+    "lon": 91.9720,
+    "geohash": "w407qh",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  }
+]

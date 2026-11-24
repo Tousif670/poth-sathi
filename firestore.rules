@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Deny ALL client reads and writes.
+    // All access goes through the FastAPI backend
+    // using a service-account key (admin SDK).
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

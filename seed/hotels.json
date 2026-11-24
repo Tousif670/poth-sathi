@@ -1,0 +1,89 @@
+[
+  {
+    "id": "EXAMPLE_hotel_001",
+    "hotel_id": "EXAMPLE_hotel_001",
+    "name": {
+      "bn": "EXAMPLE হোটেল ০১",
+      "en": "EXAMPLE Hotel 001"
+    },
+    "area": "kolatoli",
+    "description": {
+      "bn": "EXAMPLE কলাতলী এলাকার নমুনা হোটেল।",
+      "en": "EXAMPLE hotel in Kolatoli area for testing."
+    },
+    "price_min_bdt": 2000,
+    "price_max_bdt": 4500,
+    "amenities": ["wifi", "restaurant", "ac"],
+    "rating": 4.2,
+    "address": {
+      "bn": "EXAMPLE কলাতলী রোড, কক্সবাজার",
+      "en": "EXAMPLE Kolatoli Road, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "lat": 21.4172,
+    "lon": 91.9810,
+    "geohash": "w407qc",
+    "image_url": "",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_hotel_002",
+    "hotel_id": "EXAMPLE_hotel_002",
+    "name": {
+      "bn": "EXAMPLE হোটেল ০২",
+      "en": "EXAMPLE Hotel 002"
+    },
+    "area": "sugandha",
+    "description": {
+      "bn": "EXAMPLE সুগন্ধা এলাকার নমুনা হোটেল।",
+      "en": "EXAMPLE hotel in Sugandha area for testing."
+    },
+    "price_min_bdt": 1800,
+    "price_max_bdt": 3500,
+    "amenities": ["wifi", "parking"],
+    "rating": 3.8,
+    "address": {
+      "bn": "EXAMPLE সুগন্ধা পয়েন্ট, কক্সবাজার",
+      "en": "EXAMPLE Sugandha Point, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "lat": 21.4250,
+    "lon": 91.9750,
+    "geohash": "w407qh",
+    "image_url": "",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_hotel_003",
+    "hotel_id": "EXAMPLE_hotel_003",
+    "name": {
+      "bn": "EXAMPLE হোটেল ০৩",
+      "en": "EXAMPLE Hotel 003"
+    },
+    "area": "laboni",
+    "description": {
+      "bn": "EXAMPLE লাবণী এলাকার নমুনা হোটেল।",
+      "en": "EXAMPLE hotel in Laboni area for testing."
+    },
+    "price_min_bdt": 2500,
+    "price_max_bdt": 6000,
+    "amenities": ["wifi", "pool", "restaurant", "elevator"],
+    "rating": 4.5,
+    "address": {
+      "bn": "EXAMPLE লাবণী পয়েন্ট, কক্সবাজার",
+      "en": "EXAMPLE Laboni Point, Cox's Bazar"
+    },
+    "phone": "EXAMPLE_PHONE",
+    "lat": 21.4350,
+    "lon": 91.9710,
+    "geohash": "w407qj",
+    "image_url": "",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  }
+]

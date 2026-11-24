@@ -1,0 +1,58 @@
+[
+  {
+    "id": "EXAMPLE_kb_001",
+    "chunk_id": "EXAMPLE_kb_001",
+    "text": {
+      "bn": "কক্সবাজার সমুদ্র সৈকতে সাঁতার কাটার পূর্বে সমুদ্রের স্রোত এবং সতর্কবার্তা লক্ষ্য করুন। লাল পতাকা দেখলে সমুদ্রে নামা থেকে সম্পূর্ণ বিরত থাকুন।",
+      "en": "Observe sea tides and warning flags before swimming at Cox's Bazar beach. Never enter the water when a red flag is hoisted."
+    },
+    "category": "beach_safety",
+    "source": "own_writing",
+    "language": "both",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_kb_002",
+    "chunk_id": "EXAMPLE_kb_002",
+    "text": {
+      "bn": "রিপ কারেন্ট হলো সৈকত থেকে দ্রুত গভীর সমুদ্রের দিকে প্রবাহিত তীব্র জলধারা। এতে পড়লে আতঙ্কিত না হয়ে সৈকতের সমান্তরালে সাঁতরে বের হয়ে আসুন।",
+      "en": "A rip current is a strong water current flowing seaward away from the shore. If caught in one, stay calm and swim parallel to the shoreline."
+    },
+    "category": "beach_safety",
+    "source": "own_writing",
+    "language": "both",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_kb_003",
+    "chunk_id": "EXAMPLE_kb_003",
+    "text": {
+      "bn": "কক্সবাজারে ভ্রমণের জন্য স্থানীয় যানবাহন যেমন সিএনজি এবং টমটমে ওঠার আগে ভাড়া নিশ্চিত করে নিন। দূরপাল্লার জন্য অনুমোদিত বাস কাউন্টার ব্যবহার করুন।",
+      "en": "When using local transport like CNG auto or tomtom in Cox's Bazar, always confirm the fare before boarding. Use authorized bus counters for long trips."
+    },
+    "category": "transport_advice",
+    "source": "own_writing",
+    "language": "both",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  },
+  {
+    "id": "EXAMPLE_kb_004",
+    "chunk_id": "EXAMPLE_kb_004",
+    "text": {
+      "bn": "কক্সবাজারের স্থানীয় সুস্বাদু সামুদ্রিক মাছের স্বাদ নিতে তাজা মাছ ও পরিষ্কার রেস্তোরাঁ নির্বাচন করুন। সবসময় নিরাপদ বোতলজাত পানি পান করুন।",
+      "en": "To enjoy local seafood dishes in Cox's Bazar, choose clean restaurants and fresh catch. Always drink bottled purified water."
+    },
+    "category": "food_guide",
+    "source": "own_writing",
+    "language": "both",
+    "data_source": "EXAMPLE",
+    "is_verified": false,
+    "last_updated": "2026-11-24T00:00:00Z"
+  }
+]

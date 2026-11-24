@@ -1,0 +1,60 @@
+{
+  "id": "safety_rules_v1",
+  "status": "REVIEW",
+  "rules": [
+    {
+      "category": "drowning_rip_current",
+      "keywords_bn": ["ডুবে যাচ্ছে", "স্রোত", "ডুবে গেছে"],
+      "keywords_en": ["drowning", "rip current", "swept away"],
+      "keywords_banglish": ["dube jacche", "srot", "dube geche"],
+      "action": "EMERGENCY",
+      "response_key": "emergency_drowning",
+      "status": "REVIEW"
+    },
+    {
+      "category": "medical_emergency",
+      "keywords_bn": ["হার্ট অ্যাটাক", "রক্তক্ষরণ", "অজ্ঞান"],
+      "keywords_en": ["heart attack", "bleeding", "unconscious"],
+      "keywords_banglish": ["heart attack", "roktokhoron", "ojjan"],
+      "action": "EMERGENCY",
+      "response_key": "emergency_medical",
+      "status": "REVIEW"
+    },
+    {
+      "category": "theft_harassment",
+      "keywords_bn": ["চুরি", "ছিনতাই", "হয়রানি"],
+      "keywords_en": ["stolen", "robbed", "harassment"],
+      "keywords_banglish": ["churi", "chhintai", "harassment"],
+      "action": "EMERGENCY",
+      "response_key": "emergency_theft",
+      "status": "REVIEW"
+    },
+    {
+      "category": "lost_person_child",
+      "keywords_bn": ["হারিয়ে গেছে", "খুঁজে পাচ্ছি না", "শিশু হারিয়ে"],
+      "keywords_en": ["lost child", "missing person", "can't find"],
+      "keywords_banglish": ["hariye geche", "khuje pacchi na", "bachcha hariye"],
+      "action": "URGENT",
+      "response_key": "emergency_lost",
+      "status": "REVIEW"
+    },
+    {
+      "category": "fire",
+      "keywords_bn": ["আগুন", "আগুন লেগেছে", "পুড়ে যাচ্ছে"],
+      "keywords_en": ["fire", "burning", "flames"],
+      "keywords_banglish": ["agun", "agun legeche", "pure jacche"],
+      "action": "EMERGENCY",
+      "response_key": "emergency_fire",
+      "status": "REVIEW"
+    },
+    {
+      "category": "other_danger",
+      "keywords_bn": ["বিপদ", "সাহায্য", "বাঁচাও"],
+      "keywords_en": ["danger", "help me", "emergency"],
+      "keywords_banglish": ["bipod", "sahajjo", "bachao"],
+      "action": "URGENT",
+      "response_key": "emergency_other",
+      "status": "REVIEW"
+    }
+  ]
+}
