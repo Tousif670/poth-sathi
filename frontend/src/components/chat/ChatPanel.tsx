@@ -158,11 +158,11 @@ export function ChatPanel() {
   };
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="flex flex-row items-center justify-between border-b pb-4">
+    <Card className="flex flex-col border-feature-chat-border">
+      <CardHeader className="flex flex-row items-center justify-between border-b border-feature-chat-border/60 bg-feature-chat-tint/50 pb-4">
         <div>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Bot className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 text-lg text-feature-chat dark:text-violet-300">
+            <Bot className="h-5 w-5" />
             <span>{t("পথসাথী এআই ভ্রমণ সহকারী", "PothSathi AI Travel Companion")}</span>
           </CardTitle>
           <CardDescription className="text-xs">
@@ -174,7 +174,7 @@ export function ChatPanel() {
         </div>
 
         <span
-          className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold"
+          className="rounded-full border border-feature-chat-border bg-feature-chat-tint px-3 py-1 text-xs font-bold text-feature-chat dark:text-violet-300"
           data-testid="daily-limit-badge"
         >
           {t("বাকি মেসেজ:", "Daily Remaining:")} {formatLocaleNumber(remainingLimit, locale)}/
@@ -184,8 +184,8 @@ export function ChatPanel() {
 
       <CardContent className="space-y-4 pt-4">
         {messages.length === 0 && (
-          <div className="space-y-3 rounded-xl bg-muted/40 p-4">
-            <p className="text-xs font-semibold text-muted-foreground">
+          <div className="space-y-3 rounded-xl border border-feature-chat-border/70 bg-feature-chat-tint/40 p-4">
+            <p className="text-xs font-semibold text-feature-chat dark:text-violet-300">
               {t("দ্রুত প্রশ্ন নির্বাচন করুন:", "Try asking a common question:")}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -194,7 +194,7 @@ export function ChatPanel() {
                   key={prompt}
                   type="button"
                   onClick={() => sendMessage(prompt)}
-                  className="rounded-lg border bg-background px-3 py-1.5 text-left text-xs hover:bg-secondary"
+                  className="rounded-lg border border-feature-chat-border bg-card px-3 py-1.5 text-left text-xs font-medium text-foreground transition-colors hover:bg-feature-chat hover:text-white"
                 >
                   {prompt}
                 </button>
@@ -214,13 +214,13 @@ export function ChatPanel() {
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
                   msg.role === "user"
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-feature-chat text-white shadow-xs"
                     : msg.meta?.safety_triggered
-                      ? "border-2 border-red-600 bg-red-50 text-red-950 dark:bg-red-950/40 dark:text-red-100"
-                      : "border bg-muted/50 text-foreground"
+                      ? "border-2 border-feature-emergency bg-feature-emergency-tint text-foreground"
+                      : "border border-feature-chat-border bg-feature-chat-tint/50 text-foreground"
                 }`}
               >
-                <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold opacity-80">
+                <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold opacity-90">
                   {msg.role === "user" ? (
                     <>
                       <User className="h-3 w-3" />
@@ -228,13 +228,17 @@ export function ChatPanel() {
                     </>
                   ) : msg.meta?.safety_triggered ? (
                     <>
-                      <ShieldAlert className="h-3.5 w-3.5 text-red-600" />
-                      <span>{t("জরুরি নিরাপত্তা সতর্কবার্তা", "Emergency Safety Response")}</span>
+                      <ShieldAlert className="h-3.5 w-3.5 text-feature-emergency" />
+                      <span className="text-feature-emergency">
+                        {t("জরুরি নিরাপত্তা সতর্কবার্তা", "Emergency Safety Response")}
+                      </span>
                     </>
                   ) : (
                     <>
-                      <Bot className="h-3.5 w-3.5" />
-                      <span>{t("পথসাথী এআই", "PothSathi AI")}</span>
+                      <Bot className="h-3.5 w-3.5 text-feature-chat dark:text-violet-300" />
+                      <span className="text-feature-chat dark:text-violet-300">
+                        {t("পথসাথী এআই", "PothSathi AI")}
+                      </span>
                     </>
                   )}
                 </div>
@@ -246,22 +250,24 @@ export function ChatPanel() {
                     {msg.meta.cards.map((card, idx) => (
                       <div
                         key={`${card.type}-${idx}`}
-                        className="rounded-lg border bg-background p-2.5 text-xs text-foreground"
+                        className="rounded-lg border border-feature-chat-border bg-card p-2.5 text-xs text-foreground shadow-2xs"
                       >
-                        <span className="font-bold uppercase text-primary">{card.type}: </span>
+                        <span className="font-bold uppercase text-feature-chat dark:text-violet-300">
+                          {card.type}:{" "}
+                        </span>
                         <span>{String(card.data.name || card.data.zone_name || card.data.origin || "")}</span>
                         {card.data.price_min_bdt !== undefined && (
-                          <span className="ml-2 font-semibold">
+                          <span className="ml-2 font-semibold text-feature-hotels">
                             ৳{String(card.data.price_min_bdt)}
                           </span>
                         )}
                         {card.data.min_fare_bdt !== undefined && (
-                          <span className="ml-2 font-semibold">
+                          <span className="ml-2 font-semibold text-feature-fares">
                             ৳{String(card.data.min_fare_bdt)}–৳{String(card.data.max_fare_bdt)}
                           </span>
                         )}
                         {card.data.flag !== undefined && (
-                          <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 font-bold uppercase text-amber-900">
+                          <span className="ml-2 rounded bg-feature-fares-tint px-1.5 py-0.5 font-bold uppercase text-feature-fares">
                             {String(card.data.flag)}
                           </span>
                         )}
@@ -271,13 +277,13 @@ export function ChatPanel() {
                 )}
 
                 {msg.meta && msg.meta.sources.length > 0 && (
-                  <div className="mt-2.5 flex flex-wrap gap-1.5 border-t pt-2">
+                  <div className="mt-2.5 flex flex-wrap gap-1.5 border-t border-feature-chat-border/50 pt-2">
                     {msg.meta.sources.map((src) => (
                       <span
                         key={src.source_id}
-                        className="inline-flex items-center gap-1 rounded-full bg-background/90 px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground shadow-2xs"
+                        className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground shadow-2xs"
                       >
-                        <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                        <CheckCircle2 className="h-3 w-3 text-feature-nearby" />
                         <span>
                           {src.label} ({src.source_id})
                         </span>
@@ -287,20 +293,20 @@ export function ChatPanel() {
                 )}
 
                 {msg.meta?.is_ai_resting && (
-                  <div className="mt-3 flex flex-wrap gap-2 border-t pt-2 text-xs">
-                    <Link href="/hotels" className="underline font-semibold">
+                  <div className="mt-3 flex flex-wrap gap-2 border-t border-feature-chat-border/50 pt-2 text-xs">
+                    <Link href="/hotels" className="underline font-semibold text-feature-hotels">
                       {t("হোটেল তালিকা", "Hotels")}
                     </Link>
                     <span>•</span>
-                    <Link href="/fares" className="underline font-semibold">
+                    <Link href="/fares" className="underline font-semibold text-feature-fares">
                       {t("ভাড়া ক্যালকুলেটর", "Fares")}
                     </Link>
                     <span>•</span>
-                    <Link href="/safety" className="underline font-semibold">
+                    <Link href="/safety" className="underline font-semibold text-feature-safety">
                       {t("সৈকত পতাকা", "Beach Flags")}
                     </Link>
                     <span>•</span>
-                    <Link href="/emergency" className="underline font-semibold text-red-600">
+                    <Link href="/emergency" className="underline font-semibold text-feature-emergency">
                       {t("জরুরি ৯৯৯", "Emergency 999")}
                     </Link>
                   </div>
@@ -310,7 +316,7 @@ export function ChatPanel() {
           ))}
 
           {loading && (
-            <p className="text-xs italic text-muted-foreground">
+            <p className="text-xs italic text-feature-chat dark:text-violet-300">
               {t("পথসাথী উত্তর প্রস্তুত করছে...", "PothSathi is thinking...")}
             </p>
           )}
@@ -319,7 +325,7 @@ export function ChatPanel() {
         {errorBanner && (
           <div
             role="alert"
-            className="flex items-center gap-2 rounded-lg border border-red-300 bg-red-50 p-3 text-xs text-red-900"
+            className="flex items-center gap-2 rounded-lg border border-feature-emergency-border bg-feature-emergency-tint p-3 text-xs font-medium text-feature-emergency"
           >
             <AlertTriangle className="h-4 w-4 shrink-0" />
             <span>{errorBanner}</span>
@@ -342,10 +348,14 @@ export function ChatPanel() {
               "বাংলা বা ইংরেজিতে আপনার প্রশ্ন লিখুন (সর্বোচ্চ ২০০০ অক্ষর)...",
               "Ask about Cox's Bazar hotels, fares, safety, or nearby places...",
             )}
-            className="flex-1 rounded-xl border bg-background px-4 py-2.5 text-sm"
+            className="flex-1 rounded-xl border border-feature-chat-border bg-background px-4 py-2.5 text-sm focus:border-feature-chat focus:outline-none"
             data-testid="chat-input"
           />
-          <Button type="submit" disabled={loading || !input.trim()} className="gap-1.5">
+          <Button
+            type="submit"
+            disabled={loading || !input.trim()}
+            className="gap-1.5 bg-feature-chat text-white hover:bg-feature-chat-hover shadow-xs h-10 px-4"
+          >
             <Send className="h-4 w-4" />
             <span>{t("পাঠান", "Send")}</span>
           </Button>

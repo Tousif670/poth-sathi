@@ -88,15 +88,21 @@ export default function EmergencyPage() {
   };
 
   return (
-    <main className="mx-auto max-w-4xl space-y-6 px-4 py-8">
-      <div className="rounded-2xl border-2 border-red-600 bg-red-50/90 p-6 space-y-4 dark:bg-red-950/30">
-        <div className="flex items-start gap-3">
-          <ShieldAlert className="h-8 w-8 shrink-0 text-red-600" />
+    <main className="mx-auto max-w-4xl space-y-6 px-4 py-8" data-feature="emergency">
+      {/* Feature Header & SOS Action Banner — Crimson Red (#DC2626) & Soft Tint (#FEF2F2) */}
+      <section className="rounded-2xl border-2 border-feature-emergency bg-feature-emergency-tint p-6 space-y-4 shadow-sm">
+        <div className="flex items-start gap-3.5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-feature-emergency text-white shadow-xs">
+            <ShieldAlert className="h-6 w-6" />
+          </div>
           <div className="space-y-1">
-            <h1 className="text-2xl font-bold text-red-950 dark:text-red-100">
+            <span className="inline-flex items-center rounded-full border border-feature-emergency-border bg-card px-2.5 py-0.5 text-[11px] font-bold text-feature-emergency dark:text-red-300">
+              {t("২৪/৭ জরুরি সহায়তা", "24/7 Emergency SOS")}
+            </span>
+            <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
               {t("জরুরি সাহায্য ও এসওএস (Emergency SOS)", "Emergency Assistance & SOS")}
             </h1>
-            <p className="text-sm text-red-900/80 dark:text-red-200/80">
+            <p className="text-sm text-muted-foreground">
               {t(
                 "জীবন বিপন্ন হলে বা জরুরি বিপদে পড়লে নিচের বাটনে চাপ দিন অথবা সরাসরি ৯৯৯-এ কল করুন।",
                 "In any life-threatening situation or emergency, tap SOS below or call 999 immediately.",
@@ -108,7 +114,7 @@ export default function EmergencyPage() {
         <div className="flex flex-wrap gap-3 pt-2">
           <a
             href="tel:999"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3.5 text-base font-bold text-white shadow-md hover:bg-red-700"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-feature-emergency px-6 py-3.5 text-base font-bold text-white shadow-md transition-colors hover:bg-feature-emergency-hover"
           >
             <PhoneCall className="h-5 w-5" />
             <span>
@@ -123,7 +129,7 @@ export default function EmergencyPage() {
             disabled={submitting}
             onClick={handleTriggerSOS}
             data-testid="sos-trigger-btn"
-            className="border-red-400 font-semibold text-red-900 hover:bg-red-100 dark:text-red-100"
+            className="h-auto border-feature-emergency bg-card px-4 py-3 font-semibold text-feature-emergency hover:bg-feature-emergency hover:text-white dark:text-red-300"
           >
             <AlertCircle className="mr-2 h-5 w-5" />
             <span>{t("SOS অ্যালার্ট লগ ও অবস্থান পাঠান", "Log SOS Alert & Share Location")}</span>
@@ -133,7 +139,7 @@ export default function EmergencyPage() {
             href="https://wa.me/?text=Emergency%20help%20needed%20in%20Cox%27s%20Bazar"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-600 bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-feature-nearby px-4 py-3 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-feature-nearby-hover"
           >
             <MessageCircle className="h-4 w-4" />
             <span>{t("হোয়াটসঅ্যাপ মেসেজ", "WhatsApp Emergency Link")}</span>
@@ -141,8 +147,8 @@ export default function EmergencyPage() {
         </div>
 
         {coords && (
-          <p className="inline-flex items-center gap-1.5 rounded-lg bg-background/80 px-3 py-1.5 text-xs font-mono">
-            <MapPin className="h-3.5 w-3.5 text-red-600" />
+          <p className="inline-flex items-center gap-1.5 rounded-lg border border-feature-emergency-border bg-card px-3 py-1.5 text-xs font-mono text-foreground">
+            <MapPin className="h-3.5 w-3.5 text-feature-emergency" />
             <span>
               {t("আপনার বর্তমান জিপিএস স্থানাঙ্ক:", "Your GPS coordinates:")} {coords.lat}, {coords.lng}
             </span>
@@ -152,15 +158,15 @@ export default function EmergencyPage() {
         {sosResult && (
           <div
             role="status"
-            className="rounded-xl border border-red-300 bg-background p-4 space-y-2 text-sm"
+            className="rounded-xl border border-feature-emergency bg-card p-4 space-y-2 text-sm shadow-xs"
           >
-            <p className="font-bold text-red-700">
+            <p className="font-bold text-feature-emergency dark:text-red-300">
               {t("SOS রেকর্ড সম্পন্ন:", "SOS Alert Logged:")} {sosResult.sos_id}
             </p>
-            <p>{sosResult.guidance}</p>
+            <p className="text-foreground">{sosResult.guidance}</p>
           </div>
         )}
-      </div>
+      </section>
 
       <div className="grid gap-4 sm:grid-cols-2">
         {contacts.map((contact) => {
@@ -170,13 +176,16 @@ export default function EmergencyPage() {
               ? toBengaliDigits(contact.number)
               : contact.number;
           return (
-            <Card key={contact.id}>
+            <Card
+              key={contact.id}
+              className="border-feature-emergency-border transition-shadow hover:shadow-md"
+            >
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">
+                  <CardTitle className="text-base font-bold text-foreground">
                     {pickLocalized(contact.service, locale)}
                   </CardTitle>
-                  <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-900">
+                  <span className="rounded-full border border-feature-fares-border bg-feature-fares-tint px-2.5 py-0.5 text-[10px] font-semibold text-feature-fares dark:text-amber-200">
                     {contact.status}
                   </span>
                 </div>
@@ -184,11 +193,13 @@ export default function EmergencyPage() {
                   {messages.badges.sample}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="flex items-center justify-between pt-2">
-                <span className="text-xl font-bold text-primary">{displayNum}</span>
+              <CardContent className="flex items-center justify-between border-t border-feature-emergency-border/50 bg-feature-emergency-tint/40 pt-3">
+                <span className="text-xl font-bold text-feature-emergency dark:text-red-300">
+                  {displayNum}
+                </span>
                 <a
                   href={`tel:${dial}`}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground hover:opacity-90"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-feature-emergency px-3.5 py-2 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-feature-emergency-hover"
                 >
                   <PhoneCall className="h-3.5 w-3.5" />
                   <span>{t("কল করুন", "Dial Now")}</span>

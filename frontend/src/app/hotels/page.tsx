@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Flag, MessageSquarePlus } from "lucide-react";
+import { Flag, Hotel, MessageSquarePlus } from "lucide-react";
 import { HotelCard } from "@/components/hotels/HotelCard";
 import { HotelFilters, type HotelFilterState } from "@/components/hotels/HotelFilters";
 import { Button } from "@/components/ui/button";
@@ -191,26 +191,35 @@ export default function HotelsPage() {
   }, [hotels, isTier0Fallback, filters]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {t("কক্সবাজার হোটেল এক্সপ্লোরার ও রেকমেন্ডার", "Cox's Bazar Hotel Explorer & Recommender")}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {t(
-              "এলাকা, বাজেট ও সুবিধার ভিত্তিতে সেরা ম্যাচ স্কোরসহ হোটেল খুঁজুন",
-              "Find verified and sample hotels ranked by area, budget, and amenity match score",
-            )}
-          </p>
+    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8" data-feature="hotels">
+      {/* Feature Header Banner — Royal Indigo (#4F46E5) & Soft Tint (#EEF2FF) */}
+      <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-feature-hotels-border bg-feature-hotels-tint p-5 shadow-2xs sm:p-6">
+        <div className="flex items-start gap-3.5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-feature-hotels text-white shadow-xs">
+            <Hotel className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <span className="inline-flex items-center rounded-full border border-feature-hotels-border bg-card px-2.5 py-0.5 text-[11px] font-bold text-feature-hotels dark:text-indigo-300">
+              {t("হোটেল গাইড ও রেকমেন্ডার", "Hotels Guide & Recommender")}
+            </span>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              {t("কক্সবাজার হোটেল এক্সপ্লোরার ও রেকমেন্ডার", "Cox's Bazar Hotel Explorer & Recommender")}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t(
+                "এলাকা, বাজেট ও সুবিধার ভিত্তিতে সেরা ম্যাচ স্কোরসহ হোটেল খুঁজুন",
+                "Find verified and sample hotels ranked by area, budget, and amenity match score",
+              )}
+            </p>
+          </div>
         </div>
 
         {isTier0Fallback && (
-          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-900">
+          <span className="rounded-full border border-feature-fares-border bg-feature-fares-tint px-3 py-1 text-xs font-semibold text-feature-fares dark:text-amber-300">
             {messages.badges.tier0Fallback}
           </span>
         )}
-      </div>
+      </section>
 
       <HotelFilters
         filters={filters}
@@ -219,18 +228,23 @@ export default function HotelsPage() {
       />
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-feature-hotels-border bg-feature-hotels-tint px-3 py-1 font-medium text-feature-hotels dark:text-indigo-300">
           {t("মোট ফলাফল:", "Showing results:")}{" "}
           <strong>{formatLocaleNumber(displayedHotels.length, locale)}</strong>
         </span>
       </div>
 
       {displayedHotels.length === 0 ? (
-        <div className="rounded-xl border border-dashed p-10 text-center space-y-2">
-          <p className="font-medium">
+        <div className="rounded-xl border border-dashed border-feature-hotels-border bg-feature-hotels-tint/30 p-10 text-center space-y-3">
+          <p className="font-medium text-foreground">
             {t("এই বাজেট বা ফিল্টারে কোনো হোটেল পাওয়া যায়নি।", "No hotels match the selected filters.")}
           </p>
-          <Button type="button" variant="outline" size="sm" onClick={() => setFilters(DEFAULT_FILTERS)}>
+          <Button
+            type="button"
+            size="sm"
+            onClick={() => setFilters(DEFAULT_FILTERS)}
+            className="bg-feature-hotels text-white hover:bg-feature-hotels-hover"
+          >
             {t("সব হোটেল দেখুন", "Show All Hotels")}
           </Button>
         </div>
@@ -246,12 +260,17 @@ export default function HotelsPage() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs"
         >
-          <div className="w-full max-w-lg rounded-2xl border bg-background p-6 space-y-4 shadow-xl">
+          <div className="w-full max-w-lg rounded-2xl border border-feature-hotels-border bg-card p-6 space-y-4 shadow-xl">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-xl font-bold">{pickLocalized(selectedHotel.name, locale)}</h2>
+                <span className="inline-flex items-center rounded-md border border-feature-hotels-border bg-feature-hotels-tint px-2 py-0.5 text-[11px] font-semibold text-feature-hotels dark:text-indigo-300 mb-1">
+                  {selectedHotel.area.toUpperCase()}
+                </span>
+                <h2 className="text-xl font-bold text-foreground">
+                  {pickLocalized(selectedHotel.name, locale)}
+                </h2>
                 <p className="text-xs text-muted-foreground">
                   {pickLocalized(selectedHotel.address, locale)}
                 </p>
@@ -261,13 +280,15 @@ export default function HotelsPage() {
               </Button>
             </div>
 
-            <p className="text-sm">{pickLocalized(selectedHotel.description, locale)}</p>
+            <p className="text-sm text-foreground">{pickLocalized(selectedHotel.description, locale)}</p>
 
-            <div className="rounded-lg bg-muted/50 p-3 text-sm space-y-1">
+            <div className="rounded-xl border border-feature-hotels-border bg-feature-hotels-tint/60 p-3.5 text-sm space-y-1">
               <p>
                 <strong>{t("ভাড়ার সীমা:", "Tariff Range:")}</strong>{" "}
-                {formatBdt(selectedHotel.price_min_bdt, locale)} –{" "}
-                {formatBdt(selectedHotel.price_max_bdt, locale)}
+                <span className="font-bold text-feature-hotels dark:text-indigo-300">
+                  {formatBdt(selectedHotel.price_min_bdt, locale)} –{" "}
+                  {formatBdt(selectedHotel.price_max_bdt, locale)}
+                </span>
               </p>
               <p>
                 <strong>{t("ফোন:", "Phone:")}</strong> {selectedHotel.phone}
@@ -278,8 +299,8 @@ export default function HotelsPage() {
               </p>
             </div>
 
-            <div className="space-y-2 border-t pt-3">
-              <p className="text-xs font-semibold flex items-center gap-1.5">
+            <div className="space-y-2 border-t border-border pt-3">
+              <p className="text-xs font-semibold flex items-center gap-1.5 text-feature-hotels dark:text-indigo-300">
                 <MessageSquarePlus className="h-3.5 w-3.5" />
                 <span>{t("রিভিউ ও সেন্টিমেন্ট যোগ করুন (P1)", "Write a Review with Sentiment Analysis (P1)")}</span>
               </p>
@@ -288,7 +309,7 @@ export default function HotelsPage() {
                   aria-label="Rating"
                   value={reviewRating}
                   onChange={(e) => setReviewRating(Number(e.target.value))}
-                  className="rounded-md border bg-background px-2 py-1.5 text-xs"
+                  className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs"
                 >
                   {[5, 4, 3, 2, 1].map((r) => (
                     <option key={r} value={r}>
@@ -301,16 +322,21 @@ export default function HotelsPage() {
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
                   placeholder={t("যেমন: ঘর পরিষ্কার এবং সুন্দর...", "e.g. Room was clean and great...")}
-                  className="flex-1 rounded-md border bg-background px-3 py-1.5 text-xs"
+                  className="flex-1 rounded-lg border border-border bg-background px-3 py-1.5 text-xs"
                 />
-                <Button type="button" size="sm" onClick={() => handleSubmitReview(selectedHotel)}>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => handleSubmitReview(selectedHotel)}
+                  className="bg-feature-hotels text-white hover:bg-feature-hotels-hover"
+                >
                   {t("জমা দিন", "Post")}
                 </Button>
               </div>
             </div>
 
             {feedbackNotice && (
-              <p className="rounded-md bg-emerald-50 p-2 text-xs font-medium text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200">
+              <p className="rounded-lg border border-feature-nearby-border bg-feature-nearby-tint p-2.5 text-xs font-medium text-feature-nearby dark:text-emerald-200">
                 {feedbackNotice}
               </p>
             )}
@@ -323,11 +349,12 @@ export default function HotelsPage() {
                 onClick={() => handleReportWrongInfo(selectedHotel)}
                 className="gap-1.5 text-xs"
               >
-                <Flag className="h-3.5 w-3.5 text-amber-600" />
+                <Flag className="h-3.5 w-3.5 text-feature-fares" />
                 <span>{t("ভুল তথ্য রিপোর্ট করুন", "Report Wrong Info")}</span>
               </Button>
               <Button
                 type="button"
+                className="bg-feature-hotels text-white hover:bg-feature-hotels-hover"
                 onClick={() => {
                   setSelectedHotel(null);
                   setFeedbackNotice(null);

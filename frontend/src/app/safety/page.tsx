@@ -93,34 +93,47 @@ export default function SafetyPage() {
   }, [locale]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {t("সমুদ্র সৈকত নিরাপত্তা ও পতাকা স্ট্যাটাস", "Beach Safety Flags & Advisories")}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {t(
-              "কলাতলী, সুগন্ধা ও লাবণী পয়েন্টের সর্বশেষ সতর্কতা পতাকা (৬ ঘণ্টার বেশি পুরনো হলে সতর্কবার্তা দেখাবে)",
-              "Live hazard flags for Kolatoli, Sugandha, and Laboni beaches (>6h old status marked as may be outdated)",
-            )}
-          </p>
+    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8" data-feature="safety">
+      {/* Feature Header Banner — Sky Cyan (#0284C7) & Soft Tint (#F0F9FF) */}
+      <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-feature-safety-border bg-feature-safety-tint p-5 shadow-2xs sm:p-6">
+        <div className="flex items-start gap-3.5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-feature-safety text-white shadow-xs">
+            <ShieldAlert className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <span className="inline-flex items-center rounded-full border border-feature-safety-border bg-card px-2.5 py-0.5 text-[11px] font-bold text-feature-safety dark:text-sky-300">
+              {t("সৈকত নিরাপত্তা ও পতাকা", "Beach Safety & Flags")}
+            </span>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              {t("সমুদ্র সৈকত নিরাপত্তা ও পতাকা স্ট্যাটাস", "Beach Safety Flags & Advisories")}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t(
+                "কলাতলী, সুগন্ধা ও লাবণী পয়েন্টের সর্বশেষ সতর্কতা পতাকা (৬ ঘণ্টার বেশি পুরনো হলে সতর্কবার্তা দেখাবে)",
+                "Live hazard flags for Kolatoli, Sugandha, and Laboni beaches (>6h old status marked as may be outdated)",
+              )}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {isTier0Fallback && (
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-900">
+            <span className="rounded-full border border-feature-fares-border bg-feature-fares-tint px-3 py-1 text-xs font-semibold text-feature-fares dark:text-amber-300">
               {messages.badges.tier0Fallback}
             </span>
           )}
           <Link href="/emergency">
-            <Button variant="destructive" size="sm" className="gap-1.5">
+            <Button
+              variant="destructive"
+              size="sm"
+              className="gap-1.5 bg-feature-emergency text-white hover:bg-feature-emergency-hover shadow-xs"
+            >
               <PhoneCall className="h-4 w-4" />
               <span>{t("জরুরি SOS (৯৯৯)", "Emergency SOS (999)")}</span>
             </Button>
           </Link>
         </div>
-      </div>
+      </section>
 
       <div className="grid gap-4 sm:grid-cols-3">
         {zones.map((zone) => (
@@ -128,29 +141,32 @@ export default function SafetyPage() {
         ))}
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <ShieldAlert className="h-5 w-5 text-amber-600" />
+      <Card className="border-feature-safety-border">
+        <CardHeader className="border-b border-feature-safety-border/60 bg-feature-safety-tint/60">
+          <CardTitle className="flex items-center gap-2 text-lg text-feature-safety dark:text-sky-300">
+            <ShieldAlert className="h-5 w-5" />
             <span>{t("সমুদ্র সৈকত নিরাপত্তা নির্দেশিকা", "Essential Beach Safety Guidelines")}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 text-sm">
+        <CardContent className="space-y-3 pt-4 text-sm">
           {advisories.length > 0 ? (
             advisories.map((adv) => (
-              <div key={adv.chunk_id} className="rounded-lg border bg-muted/40 p-3">
+              <div
+                key={adv.chunk_id}
+                className="rounded-xl border border-feature-safety-border/70 bg-feature-safety-tint/40 p-3.5 text-foreground"
+              >
                 {adv.text}
               </div>
             ))
           ) : (
-            <div className="space-y-2">
-              <div className="rounded-lg border bg-muted/40 p-3">
+            <div className="space-y-2.5">
+              <div className="rounded-xl border border-feature-safety-border/70 bg-feature-safety-tint/40 p-3.5 text-foreground">
                 {t(
                   "লাল পতাকা উত্তোলিত থাকলে কোনো অবস্থাতেই সমুদ্রে নামবেন না। ভাটার সময় সাঁতার কাটা থেকে বিরত থাকুন।",
                   "Never enter the sea when a red flag is hoisted. Avoid swimming during ebb tide (low tide pull).",
                 )}
               </div>
-              <div className="rounded-lg border bg-muted/40 p-3">
+              <div className="rounded-xl border border-feature-safety-border/70 bg-feature-safety-tint/40 p-3.5 text-foreground">
                 {t(
                   "রিপ কারেন্টে (উল্টো স্রোত) পড়লে আতঙ্কিত না হয়ে তীরের সমান্তরালে সাঁতার কেটে স্রোত থেকে বের হয়ে আসুন।",
                   "If caught in a rip current, stay calm and swim parallel to the shoreline until free of the current.",

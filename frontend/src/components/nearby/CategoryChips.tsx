@@ -32,10 +32,10 @@ export function CategoryChips({ selected, onSelect }: CategoryChipsProps) {
             role="tab"
             aria-selected={isActive}
             onClick={() => onSelect(cat.id)}
-            className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+            className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all ${
               isActive
-                ? "border-primary bg-primary text-primary-foreground"
-                : "bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
+                ? "border-feature-nearby bg-feature-nearby text-white shadow-xs"
+                : "border-border bg-card text-muted-foreground hover:border-feature-nearby-border hover:bg-feature-nearby-tint hover:text-feature-nearby"
             }`}
           >
             {locale === "bn" ? cat.bn : cat.en}

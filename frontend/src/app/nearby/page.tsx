@@ -93,26 +93,35 @@ export default function NearbyPage() {
   }, [places, isTier0Fallback, category]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {t("কাছাকাছি জরুরি সেবা ও ম্যাপ", "Nearby Essentials Map")}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {t(
-              "ওপেনস্ট্রিটম্যাপে হাসপাতাল, ফার্মেসি, ট্যুরিস্ট পুলিশ, এটিএম ও মসজিদ খুঁজুন",
-              "Locate hospitals, pharmacies, Tourist Police, ATMs, and mosques on OpenStreetMap",
-            )}
-          </p>
+    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8" data-feature="nearby">
+      {/* Feature Header Banner — Emerald Green (#059669) & Soft Tint (#ECFDF5) */}
+      <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-feature-nearby-border bg-feature-nearby-tint p-5 shadow-2xs sm:p-6">
+        <div className="flex items-start gap-3.5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-feature-nearby text-white shadow-xs">
+            <MapPin className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <span className="inline-flex items-center rounded-full border border-feature-nearby-border bg-card px-2.5 py-0.5 text-[11px] font-bold text-feature-nearby dark:text-emerald-300">
+              {t("কাছাকাছি স্থান ও ম্যাপ", "Nearby Essentials")}
+            </span>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              {t("কাছাকাছি জরুরি সেবা ও ম্যাপ", "Nearby Essentials Map")}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t(
+                "ওপেনস্ট্রিটম্যাপে হাসপাতাল, ফার্মেসি, ট্যুরিস্ট পুলিশ, এটিএম ও মসজিদ খুঁজুন",
+                "Locate hospitals, pharmacies, Tourist Police, ATMs, and mosques on OpenStreetMap",
+              )}
+            </p>
+          </div>
         </div>
 
         {isTier0Fallback && (
-          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-900">
+          <span className="rounded-full border border-feature-fares-border bg-feature-fares-tint px-3 py-1 text-xs font-semibold text-feature-fares dark:text-amber-300">
             {messages.badges.tier0Fallback}
           </span>
         )}
-      </div>
+      </section>
 
       <CategoryChips selected={category} onSelect={setCategory} />
 
@@ -123,44 +132,55 @@ export default function NearbyPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredPlaces.map((place) => (
-          <Card
-            key={place.place_id}
-            className="cursor-pointer transition-shadow hover:shadow-md"
-            onClick={() => setSelectedPlace(place)}
-          >
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span className="uppercase font-semibold">{place.category}</span>
-                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-900">
-                  {place.is_verified ? messages.badges.verified : messages.badges.sample}
-                </span>
-              </div>
-              <CardTitle className="text-base">{pickLocalized(place.name, locale)}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-xs text-muted-foreground">
-              <p className="inline-flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 shrink-0" />
-                <span>{pickLocalized(place.address, locale)}</span>
-              </p>
-              <div className="flex flex-wrap items-center justify-between gap-2 border-t pt-2">
-                <span className="inline-flex items-center gap-1">
-                  <Phone className="h-3.5 w-3.5" />
-                  <span>{place.phone}</span>
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  <span>{place.opening_hours}</span>
-                </span>
-                {place.distance_km !== undefined && (
-                  <span className="font-semibold text-primary">
-                    {formatLocaleNumber(place.distance_km, locale)} km
+        {filteredPlaces.map((place) => {
+          const isSelected = selectedPlace?.place_id === place.place_id;
+          return (
+            <Card
+              key={place.place_id}
+              className={`cursor-pointer transition-all hover:shadow-md ${
+                isSelected
+                  ? "border-feature-nearby ring-1 ring-feature-nearby bg-feature-nearby-tint/20"
+                  : "border-border hover:border-feature-nearby-border"
+              }`}
+              onClick={() => setSelectedPlace(place)}
+            >
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="rounded-md border border-feature-nearby-border bg-feature-nearby-tint px-2 py-0.5 uppercase font-bold text-feature-nearby dark:text-emerald-300">
+                    {place.category}
                   </span>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                  <span className="rounded-full border border-feature-fares-border bg-feature-fares-tint px-2.5 py-0.5 text-[11px] font-semibold text-feature-fares dark:text-amber-200">
+                    {place.is_verified ? messages.badges.verified : messages.badges.sample}
+                  </span>
+                </div>
+                <CardTitle className="text-base font-bold text-foreground pt-1">
+                  {pickLocalized(place.name, locale)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-xs text-muted-foreground">
+                <p className="inline-flex items-center gap-1.5">
+                  <MapPin className="h-3.5 w-3.5 shrink-0 text-feature-nearby dark:text-emerald-300" />
+                  <span>{pickLocalized(place.address, locale)}</span>
+                </p>
+                <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border pt-2">
+                  <span className="inline-flex items-center gap-1">
+                    <Phone className="h-3.5 w-3.5 text-feature-nearby dark:text-emerald-300" />
+                    <span>{place.phone}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>{place.opening_hours}</span>
+                  </span>
+                  {place.distance_km !== undefined && (
+                    <span className="rounded-full bg-feature-nearby-tint px-2 py-0.5 font-bold text-feature-nearby dark:text-emerald-300">
+                      {formatLocaleNumber(place.distance_km, locale)} km
+                    </span>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </main>
   );

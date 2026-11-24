@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TrainFront } from "lucide-react";
 import { FareCalculator } from "@/components/fares/FareCalculator";
 import { FareTable } from "@/components/fares/FareTable";
 import { useLocale } from "@/context/LocaleProvider";
@@ -72,26 +73,35 @@ export default function FaresPage() {
   }, [locale]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {t("যাতায়াত ভাড়া গাইড ও ক্যালকুলেটর", "Transport Fare Guide & Calculator")}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {t(
-              "সিএনজি অটো, টমটম (ইজিবাইক) ও রিকশার ন্যায্য ভাড়ার তালিকা এবং হিসাব",
-              "Fair fare guide and trip calculator for CNG autos, Tomtoms, and Rickshaws",
-            )}
-          </p>
+    <main className="mx-auto max-w-6xl space-y-6 px-4 py-8" data-feature="fares">
+      {/* Feature Header Banner — Warm Amber (#D97706) & Soft Tint (#FFFBEB) */}
+      <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-feature-fares-border bg-feature-fares-tint p-5 shadow-2xs sm:p-6">
+        <div className="flex items-start gap-3.5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-feature-fares text-white shadow-xs">
+            <TrainFront className="h-6 w-6" />
+          </div>
+          <div className="space-y-1">
+            <span className="inline-flex items-center rounded-full border border-feature-fares-border bg-card px-2.5 py-0.5 text-[11px] font-bold text-feature-fares dark:text-amber-300">
+              {t("যাতায়াত ভাড়া ও ক্যালকুলেটর", "Transport Fares & Calculator")}
+            </span>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              {t("যাতায়াত ভাড়া গাইড ও ক্যালকুলেটর", "Transport Fare Guide & Calculator")}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t(
+                "সিএনজি অটো, টমটম (ইজিবাইক) ও রিকশার ন্যায্য ভাড়ার তালিকা এবং হিসাব",
+                "Fair fare guide and trip calculator for CNG autos, Tomtoms, and Rickshaws",
+              )}
+            </p>
+          </div>
         </div>
 
         {isTier0Fallback && (
-          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-900">
+          <span className="rounded-full border border-feature-fares-border bg-card px-3 py-1 text-xs font-semibold text-feature-fares dark:text-amber-300">
             {messages.badges.tier0Fallback}
           </span>
         )}
-      </div>
+      </section>
 
       {routes.length > 0 && <FareCalculator routes={routes} />}
       <FareTable routes={routes} />

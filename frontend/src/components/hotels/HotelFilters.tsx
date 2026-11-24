@@ -37,10 +37,10 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
   };
 
   return (
-    <div className="rounded-xl border bg-card p-4 space-y-4 shadow-xs">
+    <div className="rounded-xl border border-feature-hotels-border bg-card p-4 space-y-4 shadow-sm">
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-1.5">
-          <label htmlFor="area-select" className="text-xs font-semibold">
+          <label htmlFor="area-select" className="text-xs font-semibold text-foreground">
             {t("এলাকা নির্বাচন করুন", "Select Beach Zone")}
           </label>
           <select
@@ -52,7 +52,7 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
                 area: e.target.value as HotelFilterState["area"],
               })
             }
-            className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-feature-hotels focus:outline-none"
           >
             <option value="">{t("সব এলাকা (কলাতলী, সুগন্ধা, লাবণী)", "All Zones")}</option>
             <option value="kolatoli">{t("কলাতলী (Kolatoli)", "Kolatoli")}</option>
@@ -63,8 +63,12 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs font-semibold">
-            <label htmlFor="budget-slider">{t("সর্বোচ্চ বাজেট (সর্বনিম্ন ভাড়া)", "Max Budget (Min Tariff)")}</label>
-            <span className="text-primary font-bold">{formatBdt(filters.maxPriceBdt, locale)}</span>
+            <label htmlFor="budget-slider" className="text-foreground">
+              {t("সর্বোচ্চ বাজেট (সর্বনিম্ন ভাড়া)", "Max Budget (Min Tariff)")}
+            </label>
+            <span className="rounded-md bg-feature-hotels-tint px-2 py-0.5 font-bold text-feature-hotels dark:text-indigo-300">
+              {formatBdt(filters.maxPriceBdt, locale)}
+            </span>
           </div>
           <input
             id="budget-slider"
@@ -79,12 +83,12 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
                 maxPriceBdt: Number(e.target.value),
               })
             }
-            className="w-full accent-primary"
+            className="w-full accent-feature-hotels"
           />
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="sort-select" className="text-xs font-semibold">
+          <label htmlFor="sort-select" className="text-xs font-semibold text-foreground">
             {t("সাজানোর ক্রম", "Sort By")}
           </label>
           <select
@@ -96,7 +100,7 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
                 sort: e.target.value as HotelFilterState["sort"],
               })
             }
-            className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-feature-hotels focus:outline-none"
           >
             <option value="match">{t("রেকমেন্ডার স্কোর (সেরা মিল)", "Recommender Match Score")}</option>
             <option value="price_asc">{t("ভাড়া (কম থেকে বেশি)", "Price (Low to High)")}</option>
@@ -106,7 +110,7 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold text-muted-foreground">
             {t("সুবিধাসমূহ:", "Amenities:")}
@@ -118,10 +122,10 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
                 key={item.id}
                 type="button"
                 onClick={() => toggleAmenity(item.id)}
-                className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
                   active
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "bg-background text-muted-foreground hover:bg-secondary"
+                    ? "border-feature-hotels bg-feature-hotels text-white shadow-2xs"
+                    : "border-border bg-background text-muted-foreground hover:border-feature-hotels-border hover:bg-feature-hotels-tint hover:text-feature-hotels"
                 }`}
               >
                 {locale === "bn" ? item.bn : item.en}
@@ -130,7 +134,13 @@ export function HotelFilters({ filters, onChange, onReset }: HotelFiltersProps) 
           })}
         </div>
 
-        <Button type="button" variant="ghost" size="sm" onClick={onReset}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={onReset}
+          className="text-feature-hotels hover:bg-feature-hotels-tint hover:text-feature-hotels dark:text-indigo-300"
+        >
           {t("ফিল্টার রিসেট", "Reset Filters")}
         </Button>
       </div>

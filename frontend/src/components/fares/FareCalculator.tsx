@@ -61,10 +61,10 @@ export function FareCalculator({ routes }: FareCalculatorProps) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-primary" />
+    <Card className="border-feature-fares-border">
+      <CardHeader className="border-b border-feature-fares-border/60 bg-feature-fares-tint/60">
+        <CardTitle className="flex items-center gap-2 text-feature-fares dark:text-amber-300">
+          <Calculator className="h-5 w-5" />
           <span>{t("ভাড়া ক্যালকুলেটর (D22)", "Trip Fare Calculator (D22)")}</span>
         </CardTitle>
         <CardDescription>
@@ -74,17 +74,17 @@ export function FareCalculator({ routes }: FareCalculatorProps) {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 pt-4">
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-1.5 sm:col-span-2">
-            <label htmlFor="route-select" className="text-xs font-semibold">
+            <label htmlFor="route-select" className="text-xs font-semibold text-foreground">
               {t("রুট ও যানবাহন", "Route & Vehicle Mode")}
             </label>
             <select
               id="route-select"
               value={selectedRouteId}
               onChange={(e) => setSelectedRouteId(e.target.value)}
-              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-feature-fares focus:outline-none"
             >
               {routes.map((r) => (
                 <option key={r.route_id} value={r.route_id}>
@@ -95,7 +95,7 @@ export function FareCalculator({ routes }: FareCalculatorProps) {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="passengers-input" className="text-xs font-semibold">
+            <label htmlFor="passengers-input" className="text-xs font-semibold text-foreground">
               {t("যাত্রী সংখ্যা", "Passengers")}
             </label>
             <input
@@ -105,23 +105,27 @@ export function FareCalculator({ routes }: FareCalculatorProps) {
               max={10}
               value={passengers}
               onChange={(e) => setPassengers(Math.max(1, Number(e.target.value) || 1))}
-              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus:border-feature-fares focus:outline-none"
             />
           </div>
         </div>
 
-        <Button type="button" onClick={handleCalculate} className="w-full sm:w-auto">
+        <Button
+          type="button"
+          onClick={handleCalculate}
+          className="w-full sm:w-auto bg-feature-fares text-white hover:bg-feature-fares-hover shadow-xs"
+        >
           {t("মোট ভাড়া হিসাব করুন", "Calculate Estimated Fare")}
         </Button>
 
         {result && (
-          <div className="rounded-xl border border-emerald-300 bg-emerald-50/70 p-4 space-y-1 dark:border-emerald-900 dark:bg-emerald-950/30">
+          <div className="rounded-xl border border-feature-fares-border bg-feature-fares-tint p-4 space-y-1">
             <p className="text-xs text-muted-foreground">
               {result.origin} → {result.destination} •{" "}
               {formatLocaleNumber(result.passengers, locale)}{" "}
               {t("জন যাত্রী", "passenger(s)")}
             </p>
-            <p className="text-xl font-bold text-emerald-900 dark:text-emerald-200">
+            <p className="text-2xl font-bold text-feature-fares dark:text-amber-300">
               {formatBdt(result.min_fare_bdt, locale)} – {formatBdt(result.max_fare_bdt, locale)}
             </p>
             <p className="text-xs text-muted-foreground">

@@ -33,8 +33,11 @@ export function BeachFlag({ zone }: BeachFlagProps) {
   const style = FLAG_STYLES[zone.flag_colour] ?? FLAG_STYLES.yellow;
 
   return (
-    <Card className="flex flex-col justify-between" data-testid={`beach-zone-${zone.zone_id}`}>
-      <CardHeader className="space-y-2 pb-3">
+    <Card
+      className="flex flex-col justify-between border-feature-safety-border transition-shadow hover:shadow-md"
+      data-testid={`beach-zone-${zone.zone_id}`}
+    >
+      <CardHeader className="space-y-2.5 pb-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span
             className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${style.badge}`}
@@ -45,28 +48,30 @@ export function BeachFlag({ zone }: BeachFlagProps) {
           </span>
 
           {zone.is_outdated && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-amber-200/80 px-2.5 py-0.5 text-[11px] font-semibold text-amber-950">
+            <span className="inline-flex items-center gap-1 rounded-full border border-feature-fares-border bg-feature-fares-tint px-2.5 py-0.5 text-[11px] font-semibold text-feature-fares dark:text-amber-200">
               <AlertTriangle className="h-3 w-3" />
               <span>{messages.badges.outdated}</span>
             </span>
           )}
         </div>
 
-        <CardTitle className="text-lg">{pickLocalized(zone.zone_name, locale)}</CardTitle>
-        <CardDescription className="text-xs">
+        <CardTitle className="text-lg font-bold text-foreground">
+          {pickLocalized(zone.zone_name, locale)}
+        </CardTitle>
+        <CardDescription className="text-xs leading-relaxed">
           {pickLocalized(zone.note, locale)}
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="border-t pt-3 text-xs text-muted-foreground space-y-1">
+      <CardContent className="border-t border-feature-safety-border/60 bg-feature-safety-tint/30 pt-3 text-xs text-muted-foreground space-y-1">
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center gap-1">
-            <Clock className="h-3.5 w-3.5" />
+            <Clock className="h-3.5 w-3.5 text-feature-safety dark:text-sky-300" />
             <span>
               {t("সর্বশেষ আপডেট:", "Last updated:")} {zone.last_updated}
             </span>
           </span>
-          <span className="inline-flex items-center gap-1">
+          <span className="inline-flex items-center gap-1 font-medium text-feature-safety dark:text-sky-300">
             <CheckCircle2 className="h-3.5 w-3.5" />
             <span>{zone.is_verified ? messages.badges.verified : messages.badges.sample}</span>
           </span>
