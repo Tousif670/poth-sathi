@@ -2,6 +2,8 @@
 
 **Your bilingual AI travel companion for Cox's Bazar**
 
+**Live Demo:** https://tousif670.github.io/poth-sathi/
+
 > This README describes the target design. The system is built in small slices; see [docs/build-plan.md](docs/build-plan.md).
 
 PothSathi is a bilingual (Bengali & English) AI-powered tourism website for Cox's Bazar, Bangladesh. It helps tourists find hotels, navigate local transport fares, check beach safety, locate nearby essentials, and chat with an AI assistant — all grounded in verified local data, never hallucinated.
@@ -388,6 +390,17 @@ The following files will exist in `docs/`:
 | [firestore-schema.md](docs/firestore-schema.md) | Firestore collections, schemas, and seed format |
 
 ---
+## Team Contributions
+
+### Tousif
+- Backend (FastAPI), Firebase setup and seed data
+- Frontend (Next.js) pages and components
+- GitHub Actions CI and GitHub Pages deployment
+
+### Roktim Saha
+- Software Requirements Specification (SRS) with system design diagrams
+- Project journal (JOURNAL.md)
+- Documentation, testing and verification of requirements against the system
 
 ## License
 
